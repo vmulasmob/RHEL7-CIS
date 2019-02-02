@@ -741,9 +741,9 @@
   yum:
       name: openldap-clients
       state: absent
-  register: openldap-clients_absent
+  register: openldap_clients_absent
   retries: 3
-  until: openldap-clients_absent is succeeded
+  until: openldap_clients_absent is succeeded
   delay: 5
   when:
       - not rhel7cis_openldap_clients_required
