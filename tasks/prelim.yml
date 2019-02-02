@@ -23,16 +23,18 @@
   yum:
       name: audit
       state: present
-  retries: 10
-  until: result | succeeded
+  register: audit_present
+  retries: 3
+  until: audit_present is succeeded
   delay: 5
 
 - name: "PRELIM | Section 5.1 | Configure cron"
   yum:
       name: cronie
       state: present
-  retries: 10
-  until: result | succeeded   # or from 2.5+ `result is succeeded`
+  register: cronie_present
+  retries: 3
+  until: cronie_present is succeeded
   delay: 5
 
 - name: "PRELIM | Check if prelink package is installed"

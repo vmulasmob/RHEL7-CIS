@@ -256,8 +256,9 @@
   yum:
     name: tcp_wrappers
     state: present
-  retries: 10
-  until: result | succeeded
+  register: tcp_wrappers_present
+  retries: 3
+  until: tcp_wrappers_present is succeeded
   delay: 5
   when:
       - rhel7cis_rule_3_4_1
@@ -374,8 +375,9 @@
   yum:
       name: firewalld
       state: present
-  retries: 10
-  until: result | succeeded
+  register: firewalld_present
+  retries: 3
+  until: firewalld_present is succeeded
   delay: 5
   when: rhel7cis_firewall == "firewalld"
   tags:
@@ -398,8 +400,9 @@
   yum:
       name: iptables
       state: present
-  retries: 10
-  until: result | succeeded
+  register: iptables_present
+  retries: 3
+  until: iptables_present is succeeded
   delay: 5
   when:
       - rhel7cis_firewall == "iptables"

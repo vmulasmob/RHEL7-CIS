@@ -552,8 +552,9 @@
   yum:
       name: aide
       state: present
-  retries: 10
-  until: result | succeeded
+  register: aide_present
+  retries: 3
+  until: aide_present is succeeded
   delay: 5
   when:
       - rhel7cis_rule_1_3_1
@@ -766,8 +767,9 @@
   yum:
     name: prelink
     state: absent
-  retries: 10
-  until: result | succeeded
+  register: prelink_absent
+  retries: 3
+  until: prelink_absent is succeeded
   delay: 5
   when:
       - rhel7cis_rule_1_5_4
@@ -827,8 +829,9 @@
   yum:
       name: setroubleshoot
       state: absent
-  retries: 10
-  until: result | succeeded
+  register: setroubleshoot_absent
+  retries: 3
+  until: setroubleshoot_absent is succeeded
   delay: 5
   when:
       - rhel7cis_rule_1_6_1_4
@@ -843,8 +846,9 @@
   yum:
       name: mcstrans
       state: absent
-  retries: 10
-  until: result | succeeded
+  register: mcstrans_absent
+  retries: 3
+  until: mcstrans_absent is succeeded
   delay: 5
   when:
       - rhel7cis_rule_1_6_1_5
@@ -858,8 +862,9 @@
   yum:
       name: libselinux
       state: present
-  retries: 10
-  until: result | succeeded
+  register: libselinux_present
+  retries: 3
+  until: libselinux_present is succeeded
   delay: 5
   when:
       - rhel7cis_rule_1_6_2
@@ -982,8 +987,9 @@
   yum:
       name: "*"
       state: latest
-  retries: 10
-  until: result | succeeded
+  register: update_latest
+  retries: 3
+  until: update_latest is succeeded
   delay: 5
   when:
       - rhel7cis_rule_1_8
