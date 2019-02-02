@@ -207,8 +207,9 @@
   yum:
       name: "{{ rhel7cis_time_synchronization }}"
       state: present
-  retries: 10
-  until: result | succeeded
+  register: rhel7cis_time_synchronization_present
+  retries: 3
+  until: rhel7cis_time_synchronization_present is succeeded
   delay: 5
   when:
       - rhel7cis_rule_2_2_1_1
@@ -331,8 +332,9 @@
   yum:
       name: "{{ item }}"
       state: absent
-  retries: 10
-  until: result | succeeded
+  register: 2_2_2_present
+  retries: 3
+  until: 2_2_2_present is succeeded
   delay: 5
   with_items:
       - "@X Window System"
@@ -660,8 +662,9 @@
   yum:
       name: ypbind
       state: absent
-  retries: 10
-  until: result | succeeded
+  register: ypbind_absent
+  retries: 3
+  until: ypbind_absent is succeeded
   delay: 5
   when:
       - not rhel7cis_ypbind_required
@@ -675,8 +678,9 @@
   yum:
       name: rsh
       state: absent
-  retries: 10
-  until: result | succeeded
+  register: rsh_absent
+  retries: 3
+  until: rsh_absent is succeeded
   delay: 5
   when:
       - not rhel7cis_rsh_required
@@ -690,8 +694,9 @@
   yum:
       name: talk
       state: absent
-  retries: 10
-  until: result | succeeded
+  register: talk_absent
+  retries: 3
+  until: talk_absent is succeeded
   delay: 5
   when:
       - not rhel7cis_talk_required
@@ -705,8 +710,9 @@
   yum:
       name: telnet
       state: absent
-  retries: 10
-  until: result | succeeded
+  register: telnet_absent
+  retries: 3
+  until: telnet_absent is succeeded
   delay: 5
   when:
       - not rhel7cis_telnet_required
@@ -720,8 +726,9 @@
   yum:
       name: openldap-clients
       state: absent
-  retries: 10
-  until: result | succeeded
+  register: openldap-clients_absent
+  retries: 3
+  until: openldap-clients_absent is succeeded
   delay: 5
   when:
       - not rhel7cis_openldap_clients_required
