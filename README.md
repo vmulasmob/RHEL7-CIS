@@ -1,6 +1,10 @@
 RHEL 7 CIS STIG
 ================
 
+Tested on AWS with Centos 7 (ami-0ff760d16d9497662)
+Ansible 2.4
+Ansible 2.7
+
 [![Build Status](https://travis-ci.org/MindPointGroup/RHEL7-CIS.svg?branch=devel)](https://travis-ci.org/MindPointGroup/RHEL7-CIS)
 [![Ansible Role](https://img.shields.io/ansible/role/16089.svg)](https://galaxy.ansible.com/MindPointGroup/RHEL7-CIS/)
 
