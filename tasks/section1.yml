@@ -427,7 +427,10 @@
       - rule_1.1.20
 
 - name: "SCORED | 1.1.21 | PATCH | Ensure sticky bit is set on all world-writable directories"
-  shell: df --local -P | awk {'if (NR!=1) print $6'} | xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null | xargs chmod a+t
+  shell: >
+    df --local -P | awk {'if (NR!=1) print $6'} |
+    xargs -I '{}' find '{}' -xdev -type d -perm -0002 2>/dev/null |
+    xargs chmod a+t
   changed_when: no
   failed_when: no
   #when: sticky_bit_on_worldwritable_dirs_audit.rc == '0'
@@ -444,7 +447,7 @@
       name: autofs
       enabled: no
   when:
-      - rhel7cis_allow_autofs == false and autofs_service_status.stdout == "loaded"
+      - not rhel7cis_allow_autofs and autofs_service_status.stdout == "loaded"
       - rhel7cis_rule_1_1_22
   tags:
       - level1
@@ -549,6 +552,9 @@
   yum:
       name: aide
       state: present
+  retries: 10
+  until: result | succeeded
+  delay: 5
   when:
       - rhel7cis_rule_1_3_1
   tags:
@@ -646,7 +652,8 @@
       content: "GRUB2_PASSWORD={{ grub_pass.passhash }}"
   notify: generate new grub config
   when:
-      - rhel7cis_set_boot_pass and grub_pass is defined and grub_pass.passhash is defined and grub_pass.passhash != ''
+      - rhel7cis_set_boot_pass and grub_pass is defined and
+        grub_pass.passhash is defined and grub_pass.passhash | length > 0
       - rhel7cis_rule_1_4_2
   tags:
       - level1
@@ -759,6 +766,9 @@
   yum:
     name: prelink
     state: absent
+  retries: 10
+  until: result | succeeded
+  delay: 5
   when:
       - rhel7cis_rule_1_5_4
   tags:
@@ -817,6 +827,9 @@
   yum:
       name: setroubleshoot
       state: absent
+  retries: 10
+  until: result | succeeded
+  delay: 5
   when:
       - rhel7cis_rule_1_6_1_4
   tags:
@@ -830,6 +843,9 @@
   yum:
       name: mcstrans
       state: absent
+  retries: 10
+  until: result | succeeded
+  delay: 5
   when:
       - rhel7cis_rule_1_6_1_5
   tags:
@@ -842,6 +858,9 @@
   yum:
       name: libselinux
       state: present
+  retries: 10
+  until: result | succeeded
+  delay: 5
   when:
       - rhel7cis_rule_1_6_2
   tags:
@@ -944,9 +963,12 @@
       - { file: '/etc/dconf/profile/gdm', regexp:  'user-db', line: 'user-db:user' }
       - { file: '/etc/dconf/profile/gdm', regexp:  'system-db', line: 'system-db:gdm' }
       - { file: '/etc/dconf/profile/gdm', regexp:  'file-db', line: 'file-db:/usr/share/gdm/greeter-dconf-defaults' }
-      - { file: '/etc/dconf/db/gdm.d/01-banner-message', regexp:  '\[org\/gnome\/login-screen\]', line: '[org/gnome/login-screen]' }
-      - { file: '/etc/dconf/db/gdm.d/01-banner-message', regexp:  'banner-message-enable', line: 'banner-message-enable=true' }
-      - { file: '/etc/dconf/db/gdm.d/01-banner-message', regexp:  'banner-message-text', line: "banner-message-text='{{ rhel7cis_warning_banner }}' " }
+      - { file: '/etc/dconf/db/gdm.d/01-banner-message',
+          regexp:  '\[org\/gnome\/login-screen\]', line: '[org/gnome/login-screen]' }
+      - { file: '/etc/dconf/db/gdm.d/01-banner-message',
+          regexp:  'banner-message-enable', line: 'banner-message-enable=true' }
+      - { file: '/etc/dconf/db/gdm.d/01-banner-message', regexp:  'banner-message-text',
+          line: "banner-message-text='{{ rhel7cis_warning_banner }}' " }
   when:
       - rhel7cis_gui
       - rhel7cis_rule_1_7_2
@@ -960,6 +982,9 @@
   yum:
       name: "*"
       state: latest
+  retries: 10
+  until: result | succeeded
+  delay: 5
   when:
       - rhel7cis_rule_1_8
   tags:
