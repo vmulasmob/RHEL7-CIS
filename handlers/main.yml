@@ -62,7 +62,9 @@
   command: dconf update
 
 - name: restart auditd
-  command: /sbin/service auditd restart
+  service:
+    name: auditd
+    state: restarted
   changed_when: no
   check_mode: no
   failed_when: no
