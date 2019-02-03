@@ -1,9 +1,15 @@
 RHEL 7 CIS STIG
 ================
 
-Tested on AWS with Centos 7 (ami-0ff760d16d9497662)
-Ansible 2.4
-Ansible 2.7
+Tested on AWS on Centos 7 (ami-0ff760d16d9497662)
+
+With:
+- Ansible 2.4
+- Ansible 2.7
+
+```bash
+ansible-playbook playbook.yml -t scored --skip-tags rule_3.4.2,rule_3.4.3
+```
 
 [![Build Status](https://travis-ci.org/MindPointGroup/RHEL7-CIS.svg?branch=devel)](https://travis-ci.org/MindPointGroup/RHEL7-CIS)
 [![Ansible Role](https://img.shields.io/ansible/role/16089.svg)](https://galaxy.ansible.com/MindPointGroup/RHEL7-CIS/)
