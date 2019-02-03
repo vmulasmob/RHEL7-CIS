@@ -11,8 +11,8 @@ With:
 ansible-playbook playbook.yml -t scored --skip-tags rule_3.4.2,rule_3.4.3
 ```
 
-[![Build Status](https://travis-ci.org/MindPointGroup/RHEL7-CIS.svg?branch=devel)](https://travis-ci.org/MindPointGroup/RHEL7-CIS)
-[![Ansible Role](https://img.shields.io/ansible/role/16089.svg)](https://galaxy.ansible.com/MindPointGroup/RHEL7-CIS/)
+[![Build Status](https://travis-ci.org/vmulasmob/RHEL7-CIS.svg?branch=devel)](https://travis-ci.org/vmulasmob/RHEL7-CIS)
+[![Ansible Role](https://img.shields.io/ansible/role/16089.svg)](https://galaxy.ansible.com/vmulasmob/rhel7_cis/)
 
 Configure RHEL/Centos 7 machine to be [CIS](https://www.cisecurity.org/cis-benchmarks/) compliant. Level 1 and 2 findings will be corrected by default.
 
