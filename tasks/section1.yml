@@ -437,6 +437,7 @@
   when:
       - rhel7cis_rule_1_1_21
   tags:
+      - scored
       - level1
       - level2
       - patch
@@ -450,6 +451,7 @@
       - not rhel7cis_allow_autofs and autofs_service_status.stdout == "loaded"
       - rhel7cis_rule_1_1_22
   tags:
+      - scored
       - level1
       - patch
       - rule_1.1.22
