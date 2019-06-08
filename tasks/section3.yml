@@ -266,6 +266,22 @@
       - patch
       - rule_3.3.3
 
+- name: "NOTSCORED | 3.3.3 | PATCH | Ensure IPv6 is disabled (sysctl)"
+  blockinfile:
+    path: /etc/sysctl.d/00-CIS.conf
+    block: |
+      net.ipv6.conf.all.disable_ipv6 = 1
+      net.ipv6.conf.default.disable_ipv6 = 1
+      net.ipv6.conf.lo.disable_ipv6 = 1
+    create: yes
+  when:
+      - not rhel7cis_ipv6_required
+      - rhel7cis_rule_3_3_3
+  tags:
+      - level1
+      - patch
+      - rule_3.3.3
+
 - name: "SCORED | 3.4.1 | PATCH | Ensure TCP Wrappers is installed"
   yum:
     name: tcp_wrappers
