@@ -478,7 +478,7 @@
       - patch
       - rule_3.6.2
 
-- name: "SCORED | 3.6.2 | PATCH | Ensure default deny firewall policy"
+- name: "SCORED | 3.6.2 | PATCH | Ensure default deny firewall policy (firewalld)"
   firewalld:
       state: enabled
       zone: drop
@@ -492,9 +492,14 @@
       - patch
       - rule_3.6.2
 
-- name: "SCORED | 3.6.2 | PATCH | Ensure default deny firewall policy"
-  command: /bin/true
-  changed_when: no
+- name: "SCORED | 3.6.2 | PATCH | Ensure default deny firewall policy (iptables)"
+  iptables:
+    chain: "{{ item }}"
+    policy: DROP
+  with_items:
+    - INPUT
+    - FORWARD
+    - OUTPUT
   when:
       - rhel7cis_firewall == "iptables"
       - rhel7cis_rule_3_6_2
@@ -503,20 +508,48 @@
       - level1
       - patch
       - rule_3.6.2
-      - notimplemented
 
 - name: "SCORED | 3.6.3 | PATCH | Ensure loopback traffic is configured"
-  command: /bin/true
-  changed_when: no
-  when:
-      - rhel7cis_firewall == "iptables"
-      - rhel7cis_rule_3_6_3
-  tags:
-      - scored
-      - level1
-      - patch
-      - rule_3.6.3
-      - notimplemented
+  block:
+    - name: "SCORED | 3.6.3 | PATCH | Ensure loopback traffic INPUT/ACCEPT"
+      iptables:
+        chain: INPUT
+        in_interface: "lo"
+        jump: ACCEPT
+      when:
+          - rhel7cis_firewall == "iptables"
+          - rhel7cis_rule_3_6_3
+      tags:
+          - scored
+          - level1
+          - patch
+          - rule_3.6.3
+    - name: "SCORED | 3.6.3 | PATCH | Ensure loopback traffic OUTPUT/ACCEPT"
+      iptables:
+        chain: OUTPUT
+        out_interface: "lo"
+        jump: ACCEPT
+      when:
+        - rhel7cis_firewall == "iptables"
+        - rhel7cis_rule_3_6_3
+      tags:
+        - scored
+        - level1
+        - patch
+        - rule_3.6.3
+    - name: "SCORED | 3.6.3 | PATCH | Ensure loopback traffic INPUT/DROP"
+      iptables:
+        chain: INPUT
+        source: 127.0.0.0/8
+        jump: DROP
+      when:
+        - rhel7cis_firewall == "iptables"
+        - rhel7cis_rule_3_6_3
+      tags:
+        - scored
+        - level1
+        - patch
+        - rule_3.6.3
 
 - name: "NOTSCORED | 3.6.4 | PATCH | Ensure outbound and established connections are configured"
   command: /bin/true
@@ -530,7 +563,7 @@
       - rule_3.6.4
       - notimplemented
 
-- name: "SCORED | 3.6.5 | PATCH | Ensure firewall rules exist for all open ports"
+- name: "SCORED | 3.6.5 | PATCH | Ensure firewall rules exist for all open ports (firewalld)"
   firewalld:
       service: "{{ item }}"
       state: enabled
@@ -548,7 +581,7 @@
       - patch
       - rule_3.6.5
 
-- name: "SCORED | 3.6.5 | PATCH | Ensure firewall rules exist for all open ports"
+- name: "SCORED | 3.6.5 | PATCH | Ensure firewall rules exist for all open ports (iptables)"
   command: /bin/true
   changed_when: no
   when:
