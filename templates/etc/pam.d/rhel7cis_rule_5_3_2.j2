@@ -1,0 +1,9 @@
+# https://linux.die.net/man/5/pam.d
+# More flexible than the single configuration file is it to configure libpam via the contents of the /etc/pam.d/ directory.
+# In this case the directory is filled with files each of which has a filename equal to a service-name (in lower-case):
+# it is the personal configuration file for the named service.
+
+auth    required                    pam_faillock.so preauth audit silent deny={{ rhel7cis_sshd.failed_login_attempts }} unlock_time={{ rhel7cis_sshd.lockout_time }}
+auth    [success=1  default=bad]    pam_unix.so
+auth    [default=die]               pam_faillock.so authfail audit deny={{ rhel7cis_sshd.failed_login_attempts }} unlock_time={{ rhel7cis_sshd.lockout_time }}
+auth    sufficient                  pam_faillock.so authsucc audit deny={{ rhel7cis_sshd.failed_login_attempts }} unlock_time={{ rhel7cis_sshd.lockout_time }}
