@@ -675,12 +675,29 @@
     - patch
     - rule_5.3.3
 
-- name: "SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512"
-  command: authconfig --passalgo=sha512 --update
-  changed_when: no
-  failed_when: no
-  when:
-      - rhel7cis_rule_5_3_4
+- name: "SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512 (/etc/pam.d/password-auth)"
+  pamd:
+    name: password-auth
+    type: password
+    control: sufficient
+    module_path: pam_unix.so
+    module_arguments: sha512
+    state: args_present
+  tags:
+      - scored
+      - level1
+      - level2
+      - patch
+      - rule_5.3.4
+
+- name: "SCORED | 5.3.4 | PATCH | Ensure password hashing algorithm is SHA-512 (/etc/pam.d/system-auth)"
+  pamd:
+    name: system-auth
+    type: password
+    control: sufficient
+    module_path: pam_unix.so
+    module_arguments: sha512
+    state: args_present
   tags:
       - scored
       - level1
