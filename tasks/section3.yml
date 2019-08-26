@@ -193,6 +193,7 @@
       state: present
       reload: yes
       ignoreerrors: yes
+  changed_when: no
   notify:
       - sysctl flush ipv4 route table
   when:
