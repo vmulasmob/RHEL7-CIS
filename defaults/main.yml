@@ -368,6 +368,8 @@ rhel7cis_sshd:
     ciphers: "aes256-ctr,aes192-ctr,aes128-ctr"
     macs: "hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,umac-128@openssh.com"
     logingracetime: 60
+    failed_login_attempts: 5
+    lockout_time: 900
     # - make sure you understand the precedence when working with these values!!
     #allowusers:
     #allowgroups: systems dba
@@ -378,6 +380,8 @@ rhel7cis_pass:
     max_days: 90
     min_days: 7
     warn_age: 7
+    limit_reuse: 5
+    set_inactive_after_days: 30
 # Syslog system
 rhel7cis_syslog: rsyslog
 #rhel7cis_syslog: syslog-ng
