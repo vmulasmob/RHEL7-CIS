@@ -757,6 +757,8 @@
     dest: "/etc/default/useradd"
     regexp: "^INACTIVE\\s+"
     line: "INACTIVE={{ rhel7cis_pass.set_inactive_after_days }}"
+    state: present
+  changed_when: no
   when:
     - rhel7cis_rule_5_4_1_4
   tags:
@@ -769,6 +771,7 @@
 - name: "SCORED | 5.4.1.4 | PATCH | Ensure inactive password lock is 30 days or less"
   command: "chage --inactive {{ rhel7cis_pass.set_inactive_after_days }} {{ item }}"
   with_items: "{{ egrep_5_4_1_4.stdout_lines }}"
+  changed_when: no
   when:
     - rhel7cis_rule_5_4_1_4
   tags:
