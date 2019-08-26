@@ -471,11 +471,7 @@
     new_type: auth
     new_control: required
     new_module_path: pam_faillock.so
-    module_arguments: "preauth
-        audit
-        silent
-        deny={{ rhel7cis_sshd.failed_login_attempts }}
-        unlock_time={{ rhel7cis_sshd.lockout_time }}"
+    module_arguments: "preauth audit silent deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: before
   when:
     - rhel7cis_rule_5_3_2
@@ -495,10 +491,7 @@
     new_type: auth
     new_control: sufficient
     new_module_path: pam_faillock.so
-    module_arguments: 'authsucc
-        audit
-        deny={{ rhel7cis_sshd.failed_login_attempts }}
-        unlock_time={{ rhel7cis_sshd.lockout_time }}'
+    module_arguments: "authsucc audit deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: after
   when:
     - rhel7cis_rule_5_3_2
@@ -518,10 +511,7 @@
     new_type: auth
     new_control: "[default=die]"
     new_module_path: pam_faillock.so
-    module_arguments: 'authfail
-        audit
-        deny={{ rhel7cis_sshd.failed_login_attempts }}
-        unlock_time={{ rhel7cis_sshd.lockout_time }}'
+    module_arguments: "authfail audit deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: after
   when:
     - rhel7cis_rule_5_3_2
@@ -550,7 +540,6 @@
       - patch
       - rule_5.3.2
 
-
 - name: "SCORED | 5.3.2 | PATCH | Ensure lockout for failed password attempts is configured(pam_faillock.so - before)"
   pamd:
     name: password-auth
@@ -560,11 +549,7 @@
     new_type: auth
     new_control: required
     new_module_path: pam_faillock.so
-    module_arguments: 'preauth
-        audit
-        silent
-        deny={{ rhel7cis_sshd.failed_login_attempts }}
-        unlock_time={{ rhel7cis_sshd.lockout_time }}'
+    module_arguments: "preauth audit silent deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: before
   when:
     - rhel7cis_rule_5_3_2
@@ -584,10 +569,7 @@
     new_type: auth
     new_control: sufficient
     new_module_path: pam_faillock.so
-    module_arguments: 'authsucc
-        audit
-        deny={{ rhel7cis_sshd.failed_login_attempts }}
-        unlock_time={{ rhel7cis_sshd.lockout_time }}'
+    module_arguments: "authsucc audit deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: after
   when:
     - rhel7cis_rule_5_3_2
@@ -607,10 +589,7 @@
     new_type: auth
     new_control: "[default=die]"
     new_module_path: pam_faillock.so
-    module_arguments: 'authfail
-        audit
-        deny={{ rhel7cis_sshd.failed_login_attempts }}
-        unlock_time={{ rhel7cis_sshd.lockout_time }}'
+    module_arguments: "authfail audit deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: after
   when:
     - rhel7cis_rule_5_3_2
@@ -871,6 +850,22 @@
       - level2
       - patch
       - rule_5.4.4
+
+- name: "SCORED | 5.4.5 | PATCH |  Ensure default user shell timeout is 900 seconds or less"
+  lineinfile:
+      state: present
+      dest: "{{ item }}"
+      line: 'TMOUT=900'
+  with_items:
+      - /etc/bashrc
+      - /etc/profile
+  when:
+      - rhel7cis_rule_5_4_5
+  tags:
+      - level1
+      - level2
+      - patch
+      - rule_5.4.5
 
 - name: "NOTSCORED | 5.5 | PATCH | Ensure root login is restricted to system console"
   command: /bin/true
