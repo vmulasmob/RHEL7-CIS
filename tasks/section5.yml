@@ -513,6 +513,7 @@
     new_module_path: pam_faillock.so
     module_arguments: "authfail audit deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: after
+  changed_when: no
   when:
     - rhel7cis_rule_5_3_2
   tags:
@@ -531,6 +532,7 @@
     new_control: '[success=1 default=bad]'
     module_arguments: ''
     state: updated
+  changed_when: no
   when:
     - rhel7cis_rule_5_3_2
   tags:
@@ -551,6 +553,7 @@
     new_module_path: pam_faillock.so
     module_arguments: "preauth audit silent deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: before
+  changed_when: no
   when:
     - rhel7cis_rule_5_3_2
   tags:
@@ -571,6 +574,7 @@
     new_module_path: pam_faillock.so
     module_arguments: "authsucc audit deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: after
+  changed_when: no
   when:
     - rhel7cis_rule_5_3_2
   tags:
@@ -591,6 +595,7 @@
     new_module_path: pam_faillock.so
     module_arguments: "authfail audit deny={{ rhel7cis_sshd['failed_login_attempts'] }} unlock_time={{ rhel7cis_sshd['lockout_time'] }}"
     state: after
+  changed_when: no
   when:
     - rhel7cis_rule_5_3_2
   tags:
@@ -609,6 +614,7 @@
     new_control: '[success=1 default=bad]'
     module_arguments: ''
     state: updated
+  changed_when: no
   when:
     - rhel7cis_rule_5_3_2
   tags:
@@ -627,6 +633,7 @@
     new_control: sufficient
     module_arguments: 'remember=5'
     state: updated
+  changed_when: no
   when:
     - rhel7cis_rule_5_3_3
   tags:
@@ -645,6 +652,7 @@
     new_control: sufficient
     module_arguments: 'remember=5'
     state: updated
+  changed_when: no
   when:
     - rhel7cis_rule_5_3_3
   tags:
@@ -662,6 +670,7 @@
     module_path: pam_unix.so
     module_arguments: sha512
     state: args_present
+  changed_when: no
   tags:
       - scored
       - level1
@@ -677,6 +686,7 @@
     module_path: pam_unix.so
     module_arguments: sha512
     state: args_present
+  changed_when: no
   tags:
       - scored
       - level1
