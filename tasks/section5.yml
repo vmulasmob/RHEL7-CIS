@@ -875,6 +875,7 @@
   when:
       - rhel7cis_rule_5_4_5
   tags:
+      - scored
       - level1
       - level2
       - patch
