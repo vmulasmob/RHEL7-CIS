@@ -474,7 +474,7 @@
 - name: "SCORED | 1.2.2 | PATCH | Ensure gpgcheck is globally activated"
   replace:
       name: /etc/yum.conf
-      regexp: "^gpgcheck=0"
+      regexp: "^gpgcheck.*"
       replace: "gpgcheck=1"
   when:
       - rhel7cis_rule_1_2_2
@@ -501,7 +501,7 @@
 - name: "SCORED | 1.2.2 | PATCH | Ensure gpgcheck is globally activated"
   replace:
       name: "{{ item.path }}"
-      regexp: "^gpgcheck=0"
+      regexp: "^gpgcheck.*"
       replace: "gpgcheck=1"
   with_items:
       - "{{ yum_repos.files }}"
