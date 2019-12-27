@@ -135,6 +135,7 @@ rhel7cis_rule_3_5_1: true
 rhel7cis_rule_3_5_2: true
 rhel7cis_rule_3_5_3: true
 rhel7cis_rule_3_5_4: true
+rhel7cis_rule_3_6: true
 rhel7cis_rule_3_6_1: true
 rhel7cis_rule_3_6_2: true
 rhel7cis_rule_3_6_3: true
